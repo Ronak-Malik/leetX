@@ -1,6 +1,10 @@
-# Virtual Environment
+# Virtual Env
+.venv/
 venv/
-.env/
+
+# Env files (IMPORTANT)
+.env
+.env.*
 
 # Python cache
 __pycache__/
@@ -9,9 +13,5 @@ __pycache__/
 # Logs
 *.log
 
-# OS files
-.DS_Store
-Thumbs.db
-
-# VS Code
+# IDE
 .vscode/
