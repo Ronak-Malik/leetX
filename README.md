@@ -1,6 +1,6 @@
 # 🚀 LeetX – AI Chatbot for LeetOTracker
 
-An AI-powered intelligent chatbot integrated with **LeetOTracker** that helps developers prepare for interviews and revise DSA efficiently using personalized insights from their LeetCode performance.
+A multi-agent AI chatbot integrated with LeetOTracker for interview prep and smart DSA revision using personalized LeetCode insights of each user.
 
 ---
 
