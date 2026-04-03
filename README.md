@@ -66,9 +66,12 @@ Focuses on logic & problem-solving patterns
 Acts like a DSA coach:
 
 Generates:
+
 📅 Structured revision plans
 🚀 3-day sprint plans
+
 Uses:
+
 Recent problems
 Weak areas
 🧠 LangGraph Workflow
@@ -92,7 +95,9 @@ Sample Schema
   }
 }
 Query Used
-db.users.find_one({ "leetcodeUsername": username })
+db.users.find_one({
+  "leetcodeUsername": username
+})
 🛠 Tech Stack
 Tech	Usage
 FastAPI	Backend API
@@ -149,11 +154,13 @@ Allowed origins:
 
 http://localhost:3000
 http://127.0.0.1:3000
+
 📌 Future Improvements
 🧠 Add more agents (Debugging Agent, Contest Coach)
 📈 Weak topic detection
 📊 Analytics dashboard
 🗣 Voice-based interaction
+
 🤝 Contribution
 
 Contributions are welcome!
@@ -162,6 +169,7 @@ Fork the repo
 Create a new branch
 Make your changes
 Submit a PR 🚀
+
 📧 Contact
 
 📩 reeshumalik7@gmail.com
