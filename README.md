@@ -1,175 +1,115 @@
-🚀 LeetX – AI Chatbot for LeetOTracker
+# 🚀 LeetX – AI Chatbot for LeetOTracker
 
-An AI-powered intelligent chatbot integrated with LeetOTracker that helps developers prepare for interviews and revise DSA efficiently using personalized insights from their LeetCode performance.
+An AI-powered intelligent chatbot integrated with **LeetOTracker** that helps developers prepare for interviews and revise DSA efficiently using personalized insights from their LeetCode performance.
 
-🧠 Introduction
+---
 
-LeetX is not just a chatbot — it's a multi-agent AI mentor system designed to simulate real interview environments and generate structured revision plans based on user performance.
+## 🧠 Introduction
+**LeetX** is not just a chatbot — it's a multi-agent AI mentor system designed to simulate real interview environments and generate structured revision plans based on user performance. It leverages real LeetCode stats to provide context-aware, personalized guidance.
 
-It leverages real LeetCode stats to provide context-aware, personalized guidance.
+## 🛠 Tech Stack
+| Tech | Usage |
+| :--- | :--- |
+| **FastAPI** | High-performance Backend API |
+| **LangGraph** | Agentic workflow & orchestration |
+| **Groq (LLaMA 3.1)** | Core LLM for reasoning |
+| **MongoDB** | User stats & metadata storage |
+| **Motor** | Async DB client for Python |
 
-🧠 Overview
+---
 
-LeetX is built using:
+## 🧩 Architecture
 
-⚡ FastAPI – Backend API
-🧠 LangGraph – Agent orchestration
-🤖 Groq (LLaMA 3.1) – LLM
-🗄 MongoDB – User stats storage
+```mermaid
+graph TD
+    A[User Query] --> B{Authentication Check}
+    B -- ❌ No --> C[Error: Authentication Required]
+    B -- ✅ Yes --> D[Search DB Node: Fetch Stats]
+    D --> E{Supervisor Node}
+    E -- 🎯 Interview Intent --> F[Interview Agent]
+    E -- 📚 Revision Intent --> G[Revision Agent]
+    F --> H[DSA Question / Evaluation]
+    G --> I[Structured Revision Plan]
+💡 Key Features
+🔐 Auth-Gated Access: Securely fetches data based on X-User-ID.
 
-It delivers intelligent responses based on real-time user data.
+🧠 Multi-Agent System: Uses LangGraph to switch between an "Interviewer" and a "Coach".
 
-🧩 Architecture
-User Query
-   │
-   ▼
-Authentication Check
-   │
-   ├── ❌ Not Authenticated → "Authentication Required"
-   │
-   └── ✅ Authenticated
-           │
-           ▼
-     Search DB Node (Fetch LeetCode Stats)
-           │
-           ▼
-     Supervisor Node (Decision Maker)
-           │
-           ├── 🎯 Interview Intent
-           │        ▼
-           │   Interview Agent
-           │        ▼
-           │   Response (DSA Question / Evaluation)
-           │
-           └── 📚 Revision Intent
-                    ▼
-              Revision Agent
-                    ▼
-              Response (Revision Plan)
-🔐 Authentication Flow
-Only authenticated users can access the chatbot
-If not logged in → ❌ "Authentication required"
-Headers
-X-User-ID: <leetcode_username>
+📊 Data-Driven Insights: Responses are tailored to your solved count (Easy/Medium/Hard).
+
+⚡ Async Backend: Built with FastAPI for low-latency streaming.
+
+🔄 Context Awareness: Remembers your weak areas and recent problem history.
+
 🧠 AI Agents
 🎯 Interview Agent
+Role: Strict Technical Interviewer.
 
-Acts like a strict technical interviewer:
+Logic: Analyzes your stats to pick appropriate difficulty levels.
 
-Uses user stats (e.g., medium solved count)
-Asks DSA questions
-Evaluates answers
-Gives score out of 10
-Focuses on logic & problem-solving patterns
+Output: Asks questions, evaluates logic, and provides a score out of 10.
+
 📚 Revision Agent
+Role: DSA Coach.
 
-Acts like a DSA coach:
+Logic: Focuses on recent problems and weak topics.
 
-Generates:
+Output: Generates 3-day sprint plans and structured revision roadmaps.
 
-📅 Structured revision plans
-🚀 3-day sprint plans
-
-Uses:
-
-Recent problems
-Weak areas
-🧠 LangGraph Workflow
-🔹 Nodes
-search_db_node → Fetches LeetCode stats from MongoDB
-supervisor_node → Routes request
-interview_node → Interview agent
-revision_node → Revision planner
-🔹 Routing Logic
-Keywords	Agent Used
-"interview", "mock"	Interview Agent
-"revision", "plan"	Revision Agent
-🗄 Database Integration
-Sample Schema
-{
-  "leetcodeUsername": "user123",
-  "leetcodeStats": {
-    "totalSolved": 200,
-    "medium": 120,
-    "recentProblems": []
-  }
-}
-Query Used
-db.users.find_one({
-  "leetcodeUsername": username
-})
-🛠 Tech Stack
-Tech	Usage
-FastAPI	Backend API
-LangGraph	Agent workflow
-Groq (LLaMA 3.1)	LLM
-MongoDB	User stats storage
-Motor	Async DB client
-💡 Key Features
-🔐 Authentication-based access
-🧠 Multi-agent AI system
-📊 Personalized responses using real stats
-🔄 Context-aware conversations
-⚡ High-performance async backend
-🧪 Example Use Cases
-📌 Revision Plan
-
-Input:
-
-I want a perfect revision plan
-
-Output:
-
-Fetches user stats
-Generates a 3-day structured plan
-📌 Mock Interview
-
-Input:
-
-Take my interview
-
-Output:
-
-Switches to Interview Agent
-Asks DSA question
-Evaluates response
 🚀 Setup Instructions
-1️⃣ Clone Repository
-git clone https://github.com/your-username/leetx.git
+1. Clone the Repository
+Bash
+git clone [https://github.com/your-username/leetx.git](https://github.com/your-username/leetx.git)
 cd leetx
-2️⃣ Install Dependencies
+2. Install Dependencies
+Bash
 pip install -r requirements.txt
-3️⃣ Environment Variables
+3. Environment Variables
+Create a .env file in the root directory:
 
-Create a .env file:
-
+Code snippet
 MONGO_URI=your_mongodb_uri
 DB_NAME=your_db_name
 GROQ_API_KEY=your_groq_key
-4️⃣ Run Server
+4. Run the Server
+Bash
 uvicorn main:app --reload --port 8000
-🌍 CORS Configuration
+🧪 API Usage & Examples
+Authentication
+All requests must include the following header:
+X-User-ID: <your_leetcode_username>
 
-Allowed origins:
+Example: Mock Interview
+Input: "Take my interview"
 
-http://localhost:3000
-http://127.0.0.1:3000
+Output: The Supervisor routes to the Interview Agent, which analyzes your 120 Medium-solved problems and presents a relevant Linked List or DP challenge.
+
+Example: Revision Plan
+Input: "I want a perfect revision plan"
+
+Output: The Revision Agent generates a 3-day roadmap focusing on your least-practiced tags.
 
 📌 Future Improvements
-🧠 Add more agents (Debugging Agent, Contest Coach)
-📈 Weak topic detection
-📊 Analytics dashboard
-🗣 Voice-based interaction
+📈 Weak Topic Detection: Automated tagging of topics where the user struggles.
+
+🤖 Contest Coach: Real-time strategy for LeetCode weekly contests.
+
+🗣 Voice Interaction: Integration for hands-free mock interviews.
 
 🤝 Contribution
+Contributions make the open-source community an amazing place to learn and create.
 
-Contributions are welcome!
+Fork the Project
 
-Fork the repo
-Create a new branch
-Make your changes
-Submit a PR 🚀
+Create your Feature Branch (git checkout -b feature/AmazingFeature)
+
+Commit your Changes (git commit -m 'Add some AmazingFeature')
+
+Push to the Branch (git push origin feature/AmazingFeature)
+
+Open a Pull Request
 
 📧 Contact
+Reeshu Malik - reeshumalik7@gmail.com
 
-📩 reeshumalik7@gmail.com
+Project Link: https://github.com/your-username/leetx
